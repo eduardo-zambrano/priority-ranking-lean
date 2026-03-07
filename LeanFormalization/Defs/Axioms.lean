@@ -102,13 +102,6 @@ def Ax_GUT {n : ℕ} (R : PrefRel n) : Prop :=
 
 /-! ## Threshold axioms (Section 3.7) -/
 
-/-- Axiom 13: Coverage-Based Comparison (CVG).
-    The ranking depends only on the coverage-set profile. -/
-def Ax_CVG {n : ℕ} (R : PrefRel n) : Prop :=
-  ∀ (x y x' y' : Vec n),
-    (∀ a : ℝ, coverageSet x a = coverageSet y a ↔ coverageSet x' a = coverageSet y' a) →
-    (R x y ↔ R x' y')
-
 /-- Axiom 14: Lowest Threshold Scanning First (LTSF).
     For distinct x, y: find a* = min threshold where coverage sets differ.
     x ≿ y iff the highest-priority state in the symmetric difference is in H_{a*}(x).

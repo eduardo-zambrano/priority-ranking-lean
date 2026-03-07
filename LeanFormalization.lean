@@ -1,7 +1,6 @@
 import LeanFormalization.Basic
 import LeanFormalization.Defs.Rules
 import LeanFormalization.Defs.Axioms
-import LeanFormalization.Defs.Invariance
 import LeanFormalization.Examples
 import LeanFormalization.Characterizations.PMM
 import LeanFormalization.Characterizations.TMM
