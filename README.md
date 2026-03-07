@@ -6,7 +6,7 @@ Formal verification companion to **"Axiomatizations of Priority-Based Ranking Ru
 
 The paper axiomatizes six ranking rules for comparing vectors in $\mathbb{R}^n$ when coordinates have an exogenous priority order (e.g., journal quality tiers, risk categories). This repository contains a complete, sorry-free formalization of all six characterization theorems, two impossibility results, structural relationships, and axiom satisfaction/violation proofs.
 
-**5,200+ lines of Lean 4 &middot; 170 theorems &middot; 0 sorrys**
+**4,800+ lines of Lean 4 &middot; 158 theorems &middot; 0 sorrys**
 
 ## Characterization Theorems
 
@@ -30,9 +30,9 @@ Each characterization theorem is an `iff`: the rule equals the conjunction of it
 | Paper | Statement | File |
 |-------|-----------|------|
 | Thm 4.1 | NCA ∧ TM → ⊥ | [`Impossibility/NCA_TM.lean`](LeanFormalization/Impossibility/NCA_TM.lean) |
-| Thm 4.2 | FOSD ∧ LTSF → ⊥, FOSD ∧ HTSF → ⊥ | [`Impossibility/FOSD_Threshold.lean`](LeanFormalization/Impossibility/FOSD_Threshold.lean) |
+| Thm 4.2 | FOSD ∧ NUTC → ⊥, FOSD ∧ NDTC → ⊥ | [`Impossibility/FOSD_Threshold.lean`](LeanFormalization/Impossibility/FOSD_Threshold.lean) |
 
-> **Scope note on Thm 4.2.** The paper proves that FOSD-monotonicity is incompatible with NUTC and with NDTC. The Lean formalization proves the stronger intermediate result that FOSD is incompatible with LTSF and HTSF (the biconditional threshold-scanning axioms). Since LTSF implies NUTC and HTSF implies NDTC, these Lean theorems imply the paper's result for any rule that satisfies the scanning axioms (including P-PROT and Q-PROT), but do not formally establish the paper's more general statement about NUTC/NDTC alone.
+> The file also proves the stronger intermediate result that FOSD is incompatible with LTSF and HTSF (the biconditional threshold-scanning axioms).
 
 ### Structural Results
 - **PLS refines PMM** and **TLS refines TMM** ([`Structural/Refinement.lean`](LeanFormalization/Structural/Refinement.lean))
@@ -99,7 +99,7 @@ LeanFormalization/
 │   └── QPROT.lean                    Q-PROT axiom violation proofs
 ├── Impossibility/
 │   ├── NCA_TM.lean                   NCA vs TM impossibility
-│   └── FOSD_Threshold.lean           FOSD vs threshold-scanning impossibility
+│   └── FOSD_Threshold.lean           FOSD vs NUTC/NDTC (and LTSF/HTSF) impossibility
 └── Structural/
     └── Refinement.lean               Refinement relations and PCL = PLS
 ```
