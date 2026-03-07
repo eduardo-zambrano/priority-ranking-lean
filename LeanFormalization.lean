@@ -6,7 +6,9 @@ import LeanFormalization.Examples
 import LeanFormalization.Characterizations.PMM
 import LeanFormalization.Characterizations.TMM
 import LeanFormalization.Characterizations.PPROT
+import LeanFormalization.Characterizations.PPROT_NUTC
 import LeanFormalization.Characterizations.QPROT
+import LeanFormalization.Characterizations.QPROT_NDTC
 import LeanFormalization.Characterizations.TLS
 import LeanFormalization.Characterizations.PLS
 import LeanFormalization.Impossibility.NCA_TM

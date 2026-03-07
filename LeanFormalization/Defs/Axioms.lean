@@ -134,6 +134,35 @@ def Ax_HTSF {n : ℕ} (R : PrefRel n) : Prop :=
           (coverageSymmDiff x y ((differingThresholds x y).max' hne)).min' hD ∈
             coverageSet x ((differingThresholds x y).max' hne)
 
+/-! ## Non-compensation axioms for threshold rules (Section 4.4) -/
+
+/-- Axiom: No Upward Threshold Compensation (NUTC).
+    For distinct x, y: let a* = min differing threshold, D = H_{a*}(x) △ H_{a*}(y).
+    If min(D) ∈ H_{a*}(x), then ¬(y ≻ x).
+    Normative content: a coverage advantage at a low threshold is non-compensable
+    by high-threshold differences. -/
+def Ax_NUTC {n : ℕ} (R : PrefRel n) : Prop :=
+  ∀ (x y : Vec n),
+    x ≠ y →
+    ∀ (hne : (differingThresholds x y).Nonempty),
+      ∀ (hD : (coverageSymmDiff x y ((differingThresholds x y).min' hne)).Nonempty),
+        (coverageSymmDiff x y ((differingThresholds x y).min' hne)).min' hD ∈
+            coverageSet x ((differingThresholds x y).min' hne) →
+          ¬ strictPart R y x
+
+/-- Axiom: No Downward Threshold Compensation (NDTC).
+    Same as NUTC but uses max threshold instead of min.
+    Normative content: a coverage advantage at a high threshold is non-compensable
+    by low-threshold differences. -/
+def Ax_NDTC {n : ℕ} (R : PrefRel n) : Prop :=
+  ∀ (x y : Vec n),
+    x ≠ y →
+    ∀ (hne : (differingThresholds x y).Nonempty),
+      ∀ (hD : (coverageSymmDiff x y ((differingThresholds x y).max' hne)).Nonempty),
+        (coverageSymmDiff x y ((differingThresholds x y).max' hne)).min' hD ∈
+            coverageSet x ((differingThresholds x y).max' hne) →
+          ¬ strictPart R y x
+
 /-! ## Invariance axioms (Section 3.8) -/
 
 /-- Axiom 16: Exchange Invariance (EI).

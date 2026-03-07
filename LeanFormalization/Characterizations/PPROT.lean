@@ -11,22 +11,6 @@ import LeanFormalization.Defs.Axioms
 
 open Finset
 
-/-! ## Helper lemmas for threshold symmetry -/
-
-theorem differingThresholds_comm {n : ℕ} (x y : Vec n) :
-    differingThresholds y x = differingThresholds x y := by
-  ext a
-  simp only [differingThresholds, thresholdValues, Finset.mem_filter,
-    Finset.mem_union, Finset.mem_image, Finset.mem_univ, true_and]
-  constructor
-  · intro ⟨h1, h2⟩; exact ⟨by tauto, Ne.symm h2⟩
-  · intro ⟨h1, h2⟩; exact ⟨by tauto, Ne.symm h2⟩
-
-theorem coverageSymmDiff_comm {n : ℕ} (x y : Vec n) (a : ℝ) :
-    coverageSymmDiff y x a = coverageSymmDiff x y a := by
-  simp only [coverageSymmDiff]
-  exact symmDiff_comm _ _
-
 /-! ## Forward: P-PROT satisfies C -/
 
 /-- For x ≠ y with r* ∈ H_{a*}(y), construct PPROT_strict y x. -/
@@ -42,11 +26,11 @@ private theorem pprot_strict_of_mem_y {n : ℕ} (x y : Vec n)
   -- a*_yx = a*_xy
   have ha_eq : (differingThresholds y x).min' hne_yx =
       (differingThresholds x y).min' hne :=
-    Finset.min'_of_eq (differingThresholds_comm x y) hne_yx hne
+    Finset.min'_of_eq (differingThresholds_comm y x) hne_yx hne
   -- D_yx = D_xy
   have hD_eq : coverageSymmDiff y x ((differingThresholds y x).min' hne_yx) =
       coverageSymmDiff x y ((differingThresholds x y).min' hne) := by
-    rw [ha_eq]; exact coverageSymmDiff_comm x y _
+    rw [ha_eq]; exact coverageSymmDiff_comm y x _
   have hD_yx : (coverageSymmDiff y x ((differingThresholds y x).min' hne_yx)).Nonempty :=
     hD_eq ▸ hD
   -- r*_yx = r*_xy

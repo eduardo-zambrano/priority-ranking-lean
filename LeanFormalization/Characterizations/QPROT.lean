@@ -8,7 +8,6 @@
 
 import LeanFormalization.Defs.Rules
 import LeanFormalization.Defs.Axioms
-import LeanFormalization.Characterizations.PPROT  -- for symmetry helpers
 
 open Finset
 
@@ -24,10 +23,10 @@ private theorem qprot_strict_of_mem_y {n : ℕ} (x y : Vec n)
     rw [differingThresholds_comm]; exact hne
   have ha_eq : (differingThresholds y x).max' hne_yx =
       (differingThresholds x y).max' hne :=
-    Finset.max'_of_eq (differingThresholds_comm x y) hne_yx hne
+    Finset.max'_of_eq (differingThresholds_comm y x) hne_yx hne
   have hD_eq : coverageSymmDiff y x ((differingThresholds y x).max' hne_yx) =
       coverageSymmDiff x y ((differingThresholds x y).max' hne) := by
-    rw [ha_eq]; exact coverageSymmDiff_comm x y _
+    rw [ha_eq]; exact coverageSymmDiff_comm y x _
   have hD_yx : (coverageSymmDiff y x ((differingThresholds y x).max' hne_yx)).Nonempty :=
     hD_eq ▸ hD
   have hr_eq := Finset.min'_of_eq hD_eq hD_yx hD

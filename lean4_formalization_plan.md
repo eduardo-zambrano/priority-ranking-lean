@@ -1,5 +1,10 @@
 # Lean 4 Formalization Plan: "Axiomatizations of Priority-Based Ranking Rules"
 
+## Status (March 2026)
+
+All six characterization theorems compile sorry-free. Sprints 1-4 complete.
+Remaining work: counterexample computations in Satisfaction/ and Impossibility/FOSD_Threshold.lean (Sprint 5).
+
 ## Context
 
 The paper `axiomatization_paper.tex` (21 pages) axiomatizes six priority-based ranking rules on $\mathbb{R}^n_{\geq 0}$ (some extending to all of $\mathbb{R}^n$). A complete Lean 4 formalization would:
