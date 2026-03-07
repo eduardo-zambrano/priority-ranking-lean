@@ -14,12 +14,12 @@ Each characterization theorem is an `iff`: the rule equals the conjunction of it
 
 | Paper | Theorem | Axioms | File |
 |-------|---------|--------|------|
-| Thm 1 | PMM = TCM ∧ TCI | Top-Coordinate Monotonicity, Top-Coordinate Indifference | [`Characterizations/PMM.lean`](LeanFormalization/Characterizations/PMM.lean) |
-| Thm 2 | PLS = C ∧ T ∧ PD ∧ NCA | Completeness, Transitivity, Priority Dominance, Non-Compensatory Advantage | [`Characterizations/PLS.lean`](LeanFormalization/Characterizations/PLS.lean) |
-| Thm 3 | TMM = TM ∧ TI | Total Monotonicity, Total Independence | [`Characterizations/TMM.lean`](LeanFormalization/Characterizations/TMM.lean) |
-| Thm 4 | TLS = C ∧ TM ∧ GUT | Completeness, Total Monotonicity, Generalized Uniform Transfer | [`Characterizations/TLS.lean`](LeanFormalization/Characterizations/TLS.lean) |
-| Thm 5 | P-PROT = C ∧ T ∧ PD ∧ NUTC | Completeness, Transitivity, Priority Dominance, No Upward Threshold Compensation | [`Characterizations/PPROT_NUTC.lean`](LeanFormalization/Characterizations/PPROT_NUTC.lean) |
-| Thm 6 | Q-PROT = C ∧ T ∧ PD ∧ NDTC | Completeness, Transitivity, Priority Dominance, No Downward Threshold Compensation | [`Characterizations/QPROT_NDTC.lean`](LeanFormalization/Characterizations/QPROT_NDTC.lean) |
+| Theorem [PMM] | PMM = TCM ∧ TCI | Top-Coordinate Monotonicity, Top-Coordinate Indifference | [`Characterizations/PMM.lean`](LeanFormalization/Characterizations/PMM.lean) |
+| Theorem [PLS] | PLS = C ∧ T ∧ PD ∧ NCA | Completeness, Transitivity, Priority Dominance, Non-Compensatory Advantage | [`Characterizations/PLS.lean`](LeanFormalization/Characterizations/PLS.lean) |
+| Theorem [TMM] | TMM = TM ∧ TI | Total Monotonicity, Total Independence | [`Characterizations/TMM.lean`](LeanFormalization/Characterizations/TMM.lean) |
+| Theorem [TLS] | TLS = C ∧ TM ∧ GUT | Completeness, Total Monotonicity, Generalized Uniform Transfer | [`Characterizations/TLS.lean`](LeanFormalization/Characterizations/TLS.lean) |
+| Theorem [P-PROT] | P-PROT = C ∧ T ∧ PD ∧ NUTC | Completeness, Transitivity, Priority Dominance, No Upward Threshold Compensation | [`Characterizations/PPROT_NUTC.lean`](LeanFormalization/Characterizations/PPROT_NUTC.lean) |
+| Theorem [Q-PROT] | Q-PROT = C ∧ T ∧ PD ∧ NDTC | Completeness, Transitivity, Priority Dominance, No Downward Threshold Compensation | [`Characterizations/QPROT_NDTC.lean`](LeanFormalization/Characterizations/QPROT_NDTC.lean) |
 
 > **Naming note.** The Lean code uses `Ax_TSM` / `Ax_TSI` (Top-State Monotonicity / Indifference) where the paper uses TCM / TCI (Top-Coordinate Monotonicity / Indifference). These are identical definitions; the paper's naming was finalized after the formalization was written.
 
@@ -29,8 +29,8 @@ Each characterization theorem is an `iff`: the rule equals the conjunction of it
 
 | Paper | Statement | File |
 |-------|-----------|------|
-| Thm 4.1 | NCA ∧ TM → ⊥ | [`Impossibility/NCA_TM.lean`](LeanFormalization/Impossibility/NCA_TM.lean) |
-| Thm 4.2 | FOSD ∧ NUTC → ⊥, FOSD ∧ NDTC → ⊥ | [`Impossibility/FOSD_Threshold.lean`](LeanFormalization/Impossibility/FOSD_Threshold.lean) |
+| Theorem [NCA ∧ TM incompatible] | NCA ∧ TM → ⊥ | [`Impossibility/NCA_TM.lean`](LeanFormalization/Impossibility/NCA_TM.lean) |
+| Theorem [FOSD ∧ threshold non-compensation incompatible] | FOSD ∧ NUTC → ⊥, FOSD ∧ NDTC → ⊥ | [`Impossibility/FOSD_Threshold.lean`](LeanFormalization/Impossibility/FOSD_Threshold.lean) |
 
 > The file also proves the stronger intermediate result that FOSD is incompatible with LTSF and HTSF (the biconditional threshold-scanning axioms).
 
@@ -40,7 +40,7 @@ Each characterization theorem is an `iff`: the rule equals the conjunction of it
 
 ### Axiom Satisfaction and Violation
 
-Each rule is verified against all relevant axioms. These correspond to the paper's axiom satisfaction table (Section 3, Table 1).
+Each rule is verified against all relevant axioms. These correspond to the paper's axiom satisfaction tables (Section 3 and Appendix B).
 
 | Rule | File | Satisfies | Violates |
 |------|------|-----------|----------|
@@ -61,11 +61,11 @@ The P-PROT and Q-PROT characterizations are proved via intermediate axioms (LTSF
 ### What is not formalized
 
 The following paper results are not included in this formalization:
-- Proposition 2.1 (collapse from 12 candidate rules to 6)
-- Proposition 4.1 (axiomatic foundations and pairwise incompatibility of TCM, TM, NUTC, NDTC)
-- Proposition 6.1 (FOSD classification: which rules respect FOSD)
+- Proposition [Equivalences on $\mathbb{R}^n_{\geq 0}$] (collapse from 12 candidate rules to 6)
+- Proposition [Axiomatic foundations] (pairwise incompatibility of TCM, TM, NUTC, NDTC)
+- Proposition [FOSD classification] (which rules respect FOSD)
 - Independence of axioms (Appendix A)
-- Incomparability and domain separation results (Appendix B)
+- Incomparability and domain separation results (Appendix C)
 
 ### Domain
 
