@@ -12,6 +12,7 @@ import LeanFormalization.Characterizations.TLS
 import LeanFormalization.Characterizations.PLS
 import LeanFormalization.Impossibility.NCA_TM
 import LeanFormalization.Impossibility.FOSD_Threshold
+import LeanFormalization.Impossibility.NUTC_NDTC
 import LeanFormalization.Satisfaction.PMM
 import LeanFormalization.Satisfaction.TMM
 import LeanFormalization.Satisfaction.PLS
