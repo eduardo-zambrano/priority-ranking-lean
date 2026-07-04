@@ -4,7 +4,7 @@ Formal verification companion to **"Axiomatizations of Priority-Based Ranking Ru
 
 ## Overview
 
-The paper axiomatizes six ranking rules for comparing vectors in $\mathbb{R}^n$ when coordinates have an exogenous priority order (e.g., journal quality tiers, risk categories). This repository contains a complete, sorry-free formalization of all six characterization theorems, two impossibility results, structural relationships, and axiom satisfaction/violation proofs.
+The paper axiomatizes six ranking rules for comparing vectors in $\mathbb{R}^n$ when coordinates have an exogenous priority order (e.g., journal quality tiers, risk categories). This repository contains a complete, sorry-free formalization of all six characterization theorems, three impossibility results, structural relationships, and axiom satisfaction/violation proofs.
 
 **4,800+ lines of Lean 4 &middot; 158 theorems &middot; 0 sorrys**
 
@@ -31,6 +31,7 @@ Each characterization theorem is an `iff`: the rule equals the conjunction of it
 |-------|-----------|------|
 | Theorem [NCA ∧ TM incompatible] | NCA ∧ TM → ⊥ | [`Impossibility/NCA_TM.lean`](LeanFormalization/Impossibility/NCA_TM.lean) |
 | Theorem [FOSD ∧ threshold non-compensation incompatible] | FOSD ∧ NUTC → ⊥, FOSD ∧ NDTC → ⊥ | [`Impossibility/FOSD_Threshold.lean`](LeanFormalization/Impossibility/FOSD_Threshold.lean) |
+| Theorem [NUTC ∧ NDTC cannot be reconciled] | C ∧ T ∧ PD ∧ NUTC ∧ NDTC → ⊥ | [`Impossibility/NUTC_NDTC.lean`](LeanFormalization/Impossibility/NUTC_NDTC.lean) |
 
 > The file also proves the stronger intermediate result that FOSD is incompatible with LTSF and HTSF (the biconditional threshold-scanning axioms).
 
@@ -99,7 +100,8 @@ LeanFormalization/
 │   └── QPROT.lean                    Q-PROT axiom violation proofs
 ├── Impossibility/
 │   ├── NCA_TM.lean                   NCA vs TM impossibility
-│   └── FOSD_Threshold.lean           FOSD vs NUTC/NDTC (and LTSF/HTSF) impossibility
+│   ├── FOSD_Threshold.lean           FOSD vs NUTC/NDTC (and LTSF/HTSF) impossibility
+│   └── NUTC_NDTC.lean                C+T+PD+NUTC+NDTC jointly unsatisfiable
 └── Structural/
     └── Refinement.lean               Refinement relations and PCL = PLS
 ```
