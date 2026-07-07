@@ -3,12 +3,13 @@
   Which axioms TLS satisfies and violates.
 
   Satisfies: C, T, PD, TM, UPT, GUT, CST, CX
-  Violates: TSM, TSI, TI, NCA, CVG, LTSF, HTSF, EI
+  Violates: TSM, TSI, TI, NCA, EI, NUTC, NDTC
 -/
 
 import LeanFormalization.Defs.Rules
 import LeanFormalization.Defs.Axioms
 import LeanFormalization.Characterizations.TLS
+import LeanFormalization.Satisfaction.Witnesses
 import LeanFormalization.Structural.Refinement
 
 /-! ## TLS satisfies: C, TM, GUT (already proven in Characterizations/TLS.lean) -/
@@ -406,3 +407,29 @@ theorem TLS_violates_EI : ¬ Ax_EI (@TLS 2) := by
         rw [Fin.sum_univ_two, Fin.sum_univ_two] at hk_lt
         simp [x, xπ, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons] at hk_lt
   exact this hindiff.2
+
+/-! ## TLS violates NUTC -/
+
+/-- TLS violates NUTC: P-PROT strictly prefers (1,1) to (3,0), so NUTC forbids
+    ranking (3,0) strictly above (1,1) — but TLS does exactly that (total 3 > 2). -/
+theorem TLS_violates_NUTC : ¬ Ax_NUTC (@TLS 2) := by
+  intro h
+  have hxy : (![1, 1] : Vec 2) ≠ ![3, 0] := by
+    intro heq; have := congr_fun heq ⟨0, by omega⟩
+    norm_num [Matrix.cons_val_zero] at this
+  refine not_strict_of_NUTC h hxy pprot_strict_11_30 (TLS_satisfies_TM _ _ ?_)
+  simp only [totalSum]; rw [Fin.sum_univ_two, Fin.sum_univ_two]
+  norm_num [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+
+/-! ## TLS violates NDTC -/
+
+/-- TLS violates NDTC: Q-PROT strictly prefers (3,0) to (2,2), so NDTC forbids
+    ranking (2,2) strictly above (3,0) — but TLS does exactly that (total 4 > 3). -/
+theorem TLS_violates_NDTC : ¬ Ax_NDTC (@TLS 2) := by
+  intro h
+  have hxy : (![3, 0] : Vec 2) ≠ ![2, 2] := by
+    intro heq; have := congr_fun heq ⟨0, by omega⟩
+    norm_num [Matrix.cons_val_zero] at this
+  refine not_strict_of_NDTC h hxy qprot_strict_30_22 (TLS_satisfies_TM _ _ ?_)
+  simp only [totalSum]; rw [Fin.sum_univ_two, Fin.sum_univ_two]
+  norm_num [Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]

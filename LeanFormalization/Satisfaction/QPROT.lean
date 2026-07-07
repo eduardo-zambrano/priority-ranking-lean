@@ -3,12 +3,13 @@
   Which axioms Q-PROT satisfies and violates.
 
   Satisfies: C, HTSF (from characterization); T, PD, CST, CX, CVG
-  Violates: TSM, TSI, TM, TI, NCA
+  Violates: TSM, TSI, TM, TI, NCA, GUT, NUTC
 -/
 
 import LeanFormalization.Defs.Rules
 import LeanFormalization.Defs.Axioms
 import LeanFormalization.Characterizations.QPROT
+import LeanFormalization.Satisfaction.Witnesses
 
 /-! ## Q-PROT satisfies C and HTSF (from Characterizations/QPROT.lean) -/
 
@@ -244,3 +245,40 @@ theorem QPROT_violates_NCA : ¬ Ax_NCA (@QPROT 2) := by
           Matrix.head_cons] at h1 h2 ⊢ <;> linarith)
     (by rw [mem_coverageSet]; simp [y, Matrix.cons_val_one, Matrix.head_cons])
   exact hnca (QPROT_strictPart_of_strict hyx hqprot)
+
+/-! ## Q-PROT violates GUT -/
+
+/-- Q-PROT violates Generalized Upward Transfer: x=(2,1) and y=(0,3) have equal
+    totals with x₁ < y₁, so GUT demands x ≻ y — but Q-PROT strictly prefers
+    (0,3), which alone reaches the highest threshold 3. -/
+theorem QPROT_violates_GUT : ¬ Ax_GUT (@QPROT 2) := by
+  intro hGUT
+  let x : Vec 2 := ![2, 1]
+  let y : Vec 2 := ![0, 3]
+  have htotal : totalSum x = totalSum y := by
+    simp only [totalSum]; rw [Fin.sum_univ_two, Fin.sum_univ_two]
+    norm_num [x, y, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.head_cons]
+  have hk1 : (0 : ℕ) + 1 < 2 := by omega
+  have hagree : ∀ i : Fin 2, i.val > 0 + 1 → x i = y i := by
+    intro ⟨i, hi⟩ hgt; exfalso; omega
+  have hlt : x ⟨0 + 1, hk1⟩ < y ⟨0 + 1, hk1⟩ := by
+    norm_num [x, y, Matrix.cons_val_one, Matrix.head_cons]
+  have hstrict := hGUT x y ⟨0, by omega⟩ hk1 hagree hlt htotal
+  exact hstrict.2 (Or.inr qprot_strict_03_21)
+
+/-! ## Q-PROT violates NUTC -/
+
+/-- Q-PROT violates NUTC: P-PROT strictly prefers (1,1) to (3,0) (coverage
+    advantage at the lowest differing threshold 1), so NUTC forbids ranking
+    (3,0) strictly above (1,1) — but Q-PROT does exactly that (coverage
+    advantage at the highest differing threshold 3). -/
+theorem QPROT_violates_NUTC : ¬ Ax_NUTC (@QPROT 2) := by
+  intro h
+  have hxy : (![1, 1] : Vec 2) ≠ ![3, 0] := by
+    intro heq; have := congr_fun heq ⟨0, by omega⟩
+    norm_num [Matrix.cons_val_zero] at this
+  have hne : (![3, 0] : Vec 2) ≠ ![1, 1] := by
+    intro heq; have := congr_fun heq ⟨0, by omega⟩
+    norm_num [Matrix.cons_val_zero] at this
+  exact not_strict_of_NUTC h hxy pprot_strict_11_30
+    (QPROT_strictPart_of_strict hne qprot_strict_30_11)

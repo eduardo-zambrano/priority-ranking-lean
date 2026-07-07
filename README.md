@@ -44,14 +44,14 @@ These files, together with the `satisfies` lemmas inside the characterization fi
 
 | Rule | Satisfies | Violates | File |
 |------|-----------|----------|------|
-| PMM | C, T, TCM, TCI, NCA, CST, CX | PD | [`Satisfaction/PMM.lean`](LeanFormalization/Satisfaction/PMM.lean) |
-| PLS | C, T, PD, NCA, TCM, UPT, CST, CX | TM, TI, TCI, GUT, EI | [`Satisfaction/PLS.lean`](LeanFormalization/Satisfaction/PLS.lean) |
-| TMM | C, T, TM, TI, PD, CST, CX, EI | TCM | [`Satisfaction/TMM.lean`](LeanFormalization/Satisfaction/TMM.lean) |
-| TLS | C, T, PD, TM, GUT, UPT, CST, CX | TCM, TI, TCI, NCA, EI | [`Satisfaction/TLS.lean`](LeanFormalization/Satisfaction/TLS.lean) |
-| P-PROT | C, T, PD, NUTC | TM, TI, TCM, TCI, NCA | [`Satisfaction/PPROT.lean`](LeanFormalization/Satisfaction/PPROT.lean) |
-| Q-PROT | C, T, PD, NDTC | TM, TI, TCM, TCI, NCA | [`Satisfaction/QPROT.lean`](LeanFormalization/Satisfaction/QPROT.lean) |
+| PMM | C, T, TCM, TCI, NCA, CST, CX | PD, TM, TI, GUT, NUTC, NDTC | [`Satisfaction/PMM.lean`](LeanFormalization/Satisfaction/PMM.lean) |
+| PLS | C, T, PD, NCA, TCM, UPT, CST, CX | TM, TI, TCI, GUT, EI, NUTC, NDTC | [`Satisfaction/PLS.lean`](LeanFormalization/Satisfaction/PLS.lean) |
+| TMM | C, T, TM, TI, PD, CST, CX, EI | TCM, TCI, NCA, GUT, NUTC, NDTC | [`Satisfaction/TMM.lean`](LeanFormalization/Satisfaction/TMM.lean) |
+| TLS | C, T, PD, TM, GUT, UPT, CST, CX | TCM, TI, TCI, NCA, EI, NUTC, NDTC | [`Satisfaction/TLS.lean`](LeanFormalization/Satisfaction/TLS.lean) |
+| P-PROT | C, T, PD, NUTC | TM, TI, TCM, TCI, NCA, GUT, NDTC | [`Satisfaction/PPROT.lean`](LeanFormalization/Satisfaction/PPROT.lean) |
+| Q-PROT | C, T, PD, NDTC | TM, TI, TCM, TCI, NCA, GUT, NUTC | [`Satisfaction/QPROT.lean`](LeanFormalization/Satisfaction/QPROT.lean) |
 
-The remaining cross-family violation entries of the paper's Section 4 table (e.g., PMM violates NUTC) are not stated as standalone Lean theorems; see "What is not formalized" below.
+This covers **every** entry (all ✓ and all ✗) of the paper's Section 4 axiom table. Satisfaction lemmas are proved for arbitrary $n$; violation lemmas exhibit explicit counterexamples at $n = 2$ (or $n = 3$ where the $n = 2$ case degenerates, e.g. PMM vs. GUT). The cross-family violations route through [`Satisfaction/Witnesses.lean`](LeanFormalization/Satisfaction/Witnesses.lean), which exploits the fact that the NUTC (resp. NDTC) hypotheses for a pair are precisely `PPROT_strict` (resp. `QPROT_strict`).
 
 ## Internal Helper Characterizations
 
@@ -65,7 +65,6 @@ The P-PROT and Q-PROT characterizations are proved via intermediate axioms (LTSF
 - Proposition [Equivalences on $\mathbb{R}^n_{\geq 0}$] (collapse from 12 candidate rules to 6)
 - Proposition [Axiomatic foundations] (pairwise incompatibility of TCM, TM, NUTC, NDTC)
 - Proposition [FOSD classification] (which rules respect FOSD)
-- Cross-family violation entries of the Section 4 axiom table (e.g., PMM violates NUTC)
 - Independence of axioms (Appendix A)
 - Incomparability and domain separation results (Appendix C)
 
@@ -93,12 +92,13 @@ LeanFormalization/
 │   ├── QPROT.lean            Q-PROT = C ∧ HTSF (internal helper)
 │   └── QPROT_NDTC.lean       Q-PROT = C ∧ T ∧ PD ∧ NDTC
 ├── Satisfaction/
+│   ├── Witnesses.lean        NUTC/NDTC bridge lemmas + concrete witnesses
 │   ├── PMM.lean              PMM axiom satisfaction/violation proofs
 │   ├── TMM.lean              TMM axiom satisfaction/violation proofs
 │   ├── PLS.lean              PLS axiom satisfaction/violation proofs
 │   ├── TLS.lean              TLS axiom satisfaction/violation proofs
-│   ├── PPROT.lean            P-PROT axiom violation proofs
-│   └── QPROT.lean            Q-PROT axiom violation proofs
+│   ├── PPROT.lean            P-PROT axiom satisfaction/violation proofs
+│   └── QPROT.lean            Q-PROT axiom satisfaction/violation proofs
 ├── Impossibility/
 │   ├── NCA_TM.lean           NCA vs TM impossibility
 │   ├── FOSD_Threshold.lean   FOSD vs NUTC/NDTC (and LTSF/HTSF) impossibility

@@ -3,12 +3,13 @@
   Which axioms PLS satisfies and violates.
 
   Satisfies: C, T, PD, NCA, TSM, UPT, CST, CX
-  Violates: TSI, TM, TI, GUT, CVG, LTSF, HTSF, EI
+  Violates: TSI, TM, TI, GUT, EI, NUTC, NDTC
 -/
 
 import LeanFormalization.Defs.Rules
 import LeanFormalization.Defs.Axioms
 import LeanFormalization.Characterizations.PLS
+import LeanFormalization.Satisfaction.Witnesses
 
 /-! ## PLS satisfies: C, T, PD, NCA (already proven in Characterizations/PLS.lean) -/
 
@@ -283,3 +284,29 @@ theorem PLS_violates_EI : ¬ Ax_EI (@PLS 2) := by
       · have := hk_eq ⟨0, by omega⟩ (by simp [Fin.lt_def])
         simp [x, xπ, Matrix.cons_val_zero] at this
   exact this hindiff.2
+
+/-! ## PLS violates NUTC -/
+
+/-- PLS violates NUTC: P-PROT strictly prefers (1,1) to (3,0), so NUTC forbids
+    ranking (3,0) strictly above (1,1) — but PLS does exactly that (3 > 1 at the
+    top coordinate). -/
+theorem PLS_violates_NUTC : ¬ Ax_NUTC (@PLS 2) := by
+  intro h
+  have hxy : (![1, 1] : Vec 2) ≠ ![3, 0] := by
+    intro heq; have := congr_fun heq ⟨0, by omega⟩
+    norm_num [Matrix.cons_val_zero] at this
+  exact not_strict_of_NUTC h hxy pprot_strict_11_30
+    (PLS_satisfies_TSM _ _ (by norm_num [Matrix.cons_val_zero]))
+
+/-! ## PLS violates NDTC -/
+
+/-- PLS violates NDTC: Q-PROT strictly prefers (1,3) to (2,2), so NDTC forbids
+    ranking (2,2) strictly above (1,3) — but PLS does exactly that (2 > 1 at the
+    top coordinate). -/
+theorem PLS_violates_NDTC : ¬ Ax_NDTC (@PLS 2) := by
+  intro h
+  have hxy : (![1, 3] : Vec 2) ≠ ![2, 2] := by
+    intro heq; have := congr_fun heq ⟨0, by omega⟩
+    norm_num [Matrix.cons_val_zero] at this
+  exact not_strict_of_NDTC h hxy qprot_strict_13_22
+    (PLS_satisfies_TSM _ _ (by norm_num [Matrix.cons_val_zero]))
