@@ -6,8 +6,6 @@ Formal verification companion to **"Axiomatizations of Priority-Based Ranking Ru
 
 The paper axiomatizes six ranking rules for comparing vectors in $\mathbb{R}^n$ when coordinates have an exogenous priority order (e.g., journal quality tiers, risk categories). This repository contains a complete, sorry-free formalization of all six characterization theorems, three impossibility results, structural relationships, and axiom satisfaction/violation proofs.
 
-**4,800+ lines of Lean 4 &middot; 158 theorems &middot; 0 sorrys**
-
 ## Characterization Theorems
 
 Each characterization theorem is an `iff`: the rule equals the conjunction of its axioms.
